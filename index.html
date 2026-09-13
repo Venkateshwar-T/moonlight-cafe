@@ -86,6 +86,8 @@
       font-size: 16px;
       line-height: 1.55;
       width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
     }
 
     body {
@@ -99,10 +101,15 @@
       color: var(--text-primary);
       position: relative;
       width: 100%;
+      max-width: 100vw;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       padding-top: var(--nav-height); /* Offset for FIXED navbar */
       overflow-x: hidden;
+    }
+
+    section[id] {
+      scroll-margin-top: 80px;
     }
 
     @media (max-width: 900px) {
@@ -155,6 +162,7 @@
       max-width: var(--container-max);
       margin: 0 auto;
       padding: 0 1.25rem;
+      box-sizing: border-box;
     }
 
     @media (min-width: 1024px) {
@@ -164,6 +172,16 @@
     }
 
     /* Subtle Luminous Ambient Highlights & Light Gradients */
+    .ambient-glow-wrapper {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .ambient-glow {
       position: absolute;
       border-radius: 50%;
@@ -195,23 +213,27 @@
     }
 
     /* =============================================================
-       2. FIXED NAVBAR (NEVER DISAPPEARS ON SCROLL!)
+       2. FIXED NAVBAR (NEVER DISAPPEARS ON SCROLL & ZERO OVERFLOW)
        ============================================================= */
     .site-header {
       position: fixed; /* Strictly FIXED so it never disappears on scroll */
       top: 0;
       left: 0;
+      right: 0;
       width: 100%;
+      max-width: 100vw;
       z-index: 900;
-      background: rgba(19, 23, 34, 0.85);
+      background: rgba(19, 23, 34, 0.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-subtle);
       transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .site-header.scrolled {
-      background: rgba(16, 20, 30, 0.96);
+      background: rgba(16, 20, 30, 0.98);
       border-bottom-color: rgba(255, 255, 255, 0.12);
       box-shadow: 0 6px 26px rgba(0, 0, 0, 0.5);
     }
@@ -222,11 +244,70 @@
       justify-content: space-between;
       height: var(--nav-height);
       gap: 1.25rem;
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     @media (max-width: 900px) {
+      .site-header {
+        width: 100%;
+        left: 0;
+        right: 0;
+      }
+
       .nav-container {
         height: var(--nav-height-mobile);
+        padding: 0 0.85rem;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      /* Strictly remove nav container from mobile flex flow so it never takes up space or gaps */
+      .site-header nav {
+        display: none !important;
+      }
+
+      .brand-logo {
+        gap: 0.45rem;
+        min-width: 0;
+        flex-shrink: 1;
+        overflow: hidden;
+      }
+
+      .brand-title {
+        font-size: 1.15rem;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .moon-icon-wrapper {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+      }
+
+      .moon-icon-wrapper svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .header-actions {
+        gap: 0.35rem;
+        flex-shrink: 0;
+      }
+
+      .nav-search-trigger {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+      }
+
+      .btn-reserve-header {
+        display: none !important;
       }
     }
 
@@ -1411,22 +1492,29 @@
     }
 
     /* =============================================================
-       10. MOBILE DEDICATED SEARCH OVERLAY
+       10. MOBILE DEDICATED SEARCH OVERLAY & THEMATIC CARDS
        ============================================================= */
     .mobile-search-modal {
       position: fixed;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
-      height: 100vh;
-      background: rgba(15, 19, 28, 0.98);
+      max-width: 100vw;
+      height: 100%;
+      height: 100dvh;
+      background: rgba(14, 18, 27, 0.98);
       backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       z-index: 950;
       display: flex;
       flex-direction: column;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.25s ease, visibility 0.25s ease;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .mobile-search-modal.open {
@@ -1435,25 +1523,28 @@
     }
 
     .mobile-search-head {
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border-subtle);
-      background: #181E2C;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: #161C2A;
       display: flex;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .mobile-search-pill-wrap {
       flex-grow: 1;
       display: flex;
       align-items: center;
-      background: #111622;
-      border: 1px solid var(--border-light);
+      background: #0E121C;
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: var(--radius-full);
-      padding: 0.45rem 0.85rem;
+      padding: 0.5rem 0.95rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .mobile-search-pill-wrap:focus-within {
       border-color: var(--cafe-caramel);
+      box-shadow: 0 0 0 3px rgba(226, 167, 105, 0.25);
     }
 
     .mobile-search-pill-wrap input {
@@ -1462,31 +1553,158 @@
       border: none !important;
       outline: none !important;
       box-shadow: none !important;
-      color: var(--text-primary);
-      font-size: 0.88rem;
+      color: #FFFFFF !important;
+      font-size: 0.92rem;
+      font-family: inherit;
+    }
+
+    .mobile-search-pill-wrap input::placeholder {
+      color: #7A89A0;
     }
 
     .btn-search-inner-close {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.12);
+      color: #F8F6F0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.72rem;
-      margin-left: 0.4rem;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
       cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .btn-search-inner-close:hover {
+      background: rgba(226, 167, 105, 0.3);
+      color: #FFFFFF;
     }
 
     .mobile-search-feed {
       flex-grow: 1;
       overflow-y: auto;
-      padding: 1.25rem;
+      -webkit-overflow-scrolling: touch;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 0.75rem;
+    }
+
+    /* Dedicated Thematic Search Result Card (Rich Dark, Amber Accents, Bold High Contrast) */
+    .search-card-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.85rem 1rem;
+      background: linear-gradient(150deg, #1E2638 0%, #131826 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-card-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--cafe-caramel);
+      opacity: 0.85;
+      transition: width 0.2s ease;
+    }
+
+    .search-card-item:hover,
+    .search-card-item:active {
+      border-color: var(--cafe-caramel);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6), 0 0 14px rgba(226, 167, 105, 0.25);
+    }
+
+    .search-card-item:hover::before {
+      width: 5px;
+    }
+
+    .search-card-img {
+      width: 54px;
+      height: 54px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(226, 167, 105, 0.3);
+      background: #171D2A;
+    }
+
+    .search-card-body {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+
+    .search-card-title {
+      font-family: var(--font-serif);
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #FFFFFF !important; /* Bold, solid, crisp white - 100% visible */
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-card-notes {
+      font-size: 0.74rem;
+      color: #E2A769 !important; /* Luminous warm caramel gold */
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+
+    .search-card-origin {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: #A6B4C8 !important; /* Clear silver mist text */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-card-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .search-card-price {
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #E2A769;
+      background: rgba(226, 167, 105, 0.12);
+      border: 1px solid rgba(226, 167, 105, 0.3);
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    .search-card-action {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #A6B4C8;
+      white-space: nowrap;
     }
 
     /* =============================================================
@@ -1562,10 +1780,12 @@
 </head>
 <body>
 
-  <!-- Subtle Warm Ambient Highlights -->
-  <div class="ambient-glow glow-hero" aria-hidden="true"></div>
-  <div class="ambient-glow glow-menu" aria-hidden="true"></div>
-  <div class="ambient-glow glow-reserve" aria-hidden="true"></div>
+  <!-- Subtle Warm Ambient Highlights (Contained to prevent any horizontal overflow) -->
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-glow glow-hero"></div>
+    <div class="ambient-glow glow-menu"></div>
+    <div class="ambient-glow glow-reserve"></div>
+  </div>
 
   <!-- 1. FIXED NAVBAR (NEVER DISAPPEARS ON SCROLL, NO HAMBURGER) -->
   <header class="site-header" id="siteHeader">
@@ -2168,12 +2388,14 @@
       <span>Search</span>
     </button>
 
-    <a href="#location" class="dock-btn" aria-label="Hours & Location">
+    <a href="#reserve" class="dock-btn" id="dockBookBtn" aria-label="Book Table">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <polyline points="12 6 12 12 16 14"></polyline>
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
       </svg>
-      <span>Hours</span>
+      <span>Book</span>
     </a>
   </nav>
 
@@ -2204,16 +2426,16 @@
         <button type="button" class="modal-x-btn" id="closeTastingModalClean">✕</button>
       </div>
       <div class="modal-box-content">
-        <h3 style="font-family: var(--font-serif); font-size: 1.35rem;" id="modalItemTitle"></h3>
-        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;" id="modalItemDesc"></p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; padding: 0.75rem 0; border-top: 1px solid var(--border-subtle);">
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: #FFFFFF !important;" id="modalItemTitle"></h3>
+        <p style="font-size: 0.88rem; color: #C2CDDC !important; line-height: 1.55;" id="modalItemDesc"></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; padding: 0.75rem 0; border-top: 1px solid rgba(255, 255, 255, 0.1);">
           <div>
             <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--cafe-caramel); text-transform: uppercase; font-weight: 600;">Origin / Varietal</span>
-            <p style="font-size: 0.82rem; font-weight: 500;" id="modalItemOrigin"></p>
+            <p style="font-size: 0.84rem; font-weight: 500; color: #FFFFFF !important;" id="modalItemOrigin"></p>
           </div>
           <div>
             <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--cafe-caramel); text-transform: uppercase; font-weight: 600;">Tasting Profile</span>
-            <p style="font-size: 0.82rem; font-weight: 500;" id="modalItemNotes"></p>
+            <p style="font-size: 0.84rem; font-weight: 500; color: #E2A769 !important;" id="modalItemNotes"></p>
           </div>
         </div>
         <a href="#reserve" class="btn-reserve-submit" style="text-align: center; display: block;" id="modalBookLink">Book A Table To Taste</a>
@@ -2251,6 +2473,7 @@
           desc: "Steeped French lavender blossoms combined with organic mountain honey, double ristretto, and oat milk microfoam.",
           origin: "House Blend (Ethiopia & Colombia)",
           notes: "Lavender Flowers · Wild Honey · Creamy Biscuit",
+          price: "₹340",
           img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80"
         },
         2: {
@@ -2258,6 +2481,7 @@
           desc: "Equal parts double ristretto and textured whole milk, touched with Bourbon vanilla and Maldon smoked sea salt.",
           origin: "Colombia Huila (Washed)",
           notes: "Oak Smoke · Vanilla Bean · Dark Toffee",
+          price: "₹290",
           img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80"
         },
         3: {
@@ -2265,6 +2489,7 @@
           desc: "One of the world's most prized micro-lots. Ethereal jasmine florals, white peach, and clean tea texture.",
           origin: "Boquete, Panama (1,800m)",
           notes: "Jasmine Blossom · White Peach · Lemongrass",
+          price: "₹550",
           img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80"
         },
         4: {
@@ -2272,6 +2497,7 @@
           desc: "Sun-dried natural coffee processed on raised African beds. Packed with wild blueberry and bergamot.",
           origin: "Yirgacheffe (1,950m)",
           notes: "Wild Blueberry · Dried Peach · Honey",
+          price: "₹350",
           img: "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=600&q=80"
         },
         5: {
@@ -2279,6 +2505,7 @@
           desc: "Twice-baked butter croissant filled with almond frangipane cream and crunchy toasted almonds.",
           origin: "French Butter · Normandy",
           notes: "72 Layers · Toasted Almond · Orange Blossom",
+          price: "₹310",
           img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80"
         },
         6: {
@@ -2286,6 +2513,7 @@
           desc: "Traditional Scandinavian braided brioche with freshly mortared green cardamom and pearl sugar.",
           origin: "Swedish Brioche Recipe",
           notes: "Green Cardamom · Brown Butter · Sweet Crunch",
+          price: "₹260",
           img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
         },
         7: {
@@ -2293,6 +2521,7 @@
           desc: "Caramelized dark crust with an oozing molten cream center balanced by white Kyoto shiro miso.",
           origin: "Kyoto Shiro Miso",
           notes: "Burnt Caramel · Umami Miso · Molten Cream",
+          price: "₹390",
           img: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80"
         },
         8: {
@@ -2300,6 +2529,7 @@
           desc: "First harvest stone-ground Uji matcha hand-whisked with bamboo chasen and topped with coconut cloud.",
           origin: "Uji, Kyoto (Japan)",
           notes: "Ceremonial Matcha · White Chocolate · Coconut",
+          price: "₹380",
           img: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80"
         },
         9: {
@@ -2307,6 +2537,7 @@
           desc: "Toasted country sourdough with black pepper ricotta, sautéed wild mushrooms, and truffle oil.",
           origin: "36-Hour Sourdough",
           notes: "Chanterelle Mushroom · Black Truffle · Ricotta",
+          price: "₹440",
           img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80"
         },
         10: {
@@ -2314,6 +2545,7 @@
           desc: "Creamy whole burrata torn over charred brioche sourdough with fresh mission figs and chili honey.",
           origin: "Fresh Daily Artisanal Burrata",
           notes: "Creamy Burrata · Black Fig · Hot Honey",
+          price: "₹460",
           img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80"
         },
         11: {
@@ -2321,6 +2553,7 @@
           desc: "Vanilla bean gelato drowned in fresh double ristretto with hazelnut liqueur reduction.",
           origin: "Madagascar Vanilla Bean",
           notes: "Hot Ristretto · Chilled Gelato · Amaretti",
+          price: "₹360",
           img: "https://images.unsplash.com/photo-1594488518063-221d6f22d56a?auto=format&fit=crop&w=600&q=80"
         },
         12: {
@@ -2328,6 +2561,7 @@
           desc: "Whole Egyptian chamomile blossoms, blue lotus petals, and mountain honey. 100% caffeine-free.",
           origin: "Herbal Botanical Infusion",
           notes: "Blue Lotus · Apple Blossom · Soothing Honey",
+          price: "₹320",
           img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"
         }
       };
@@ -2454,40 +2688,44 @@
 
         Object.keys(itemsCatalog).forEach(id => {
           const item = itemsCatalog[id];
-          const matches = !q || item.title.toLowerCase().includes(q) || item.notes.toLowerCase().includes(q);
+          const matches = !q || item.title.toLowerCase().includes(q) || item.notes.toLowerCase().includes(q) || (item.desc && item.desc.toLowerCase().includes(q));
 
           if (matches) {
             matched++;
-            const row = document.createElement('div');
-            row.style.cssText = `
-              display: flex;
-              align-items: center;
-              gap: 0.75rem;
-              padding: 0.65rem 0.85rem;
-              background: var(--bg-surface);
-              border: 1px solid var(--border-light);
-              border-radius: var(--radius-sm);
-              box-shadow: var(--shadow-sm);
-              cursor: pointer;
-            `;
-            row.innerHTML = `
-              <img src="${item.img}" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover; flex-shrink: 0;" alt="${item.title}">
-              <div style="flex-grow: 1;">
-                <p style="font-size: 0.88rem; font-weight: 600; color: var(--text-primary);">${item.title}</p>
-                <p style="font-size: 0.72rem; color: var(--cafe-caramel);">${item.notes}</p>
+            const card = document.createElement('div');
+            card.className = 'search-card-item';
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', `View details for ${item.title}`);
+            card.innerHTML = `
+              <img src="${item.img}" class="search-card-img" alt="${item.title}" loading="lazy">
+              <div class="search-card-body">
+                <div class="search-card-title">${item.title}</div>
+                <div class="search-card-notes">${item.notes}</div>
+                <div class="search-card-origin">${item.origin}</div>
               </div>
-              <span style="color: var(--cafe-caramel); font-size: 0.85rem; font-weight: bold;">↗</span>
+              <div class="search-card-right">
+                <span class="search-card-price">${item.price || '₹340'}</span>
+                <span class="search-card-action">View ↗</span>
+              </div>
             `;
-            row.addEventListener('click', () => {
+            const openThis = () => {
               closeMobSearch();
               showTastingModal(id);
+            };
+            card.addEventListener('click', openThis);
+            card.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openThis();
+              }
             });
-            mobileSearchFeed.appendChild(row);
+            mobileSearchFeed.appendChild(card);
           }
         });
 
         if (matched === 0) {
-          mobileSearchFeed.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 2rem 0;">No items found.</p>';
+          mobileSearchFeed.innerHTML = '<p style="text-align: center; color: #A6B4C8; font-size: 0.9rem; padding: 2.5rem 1rem;">No items matched your search.</p>';
         }
       }
 
@@ -2538,9 +2776,26 @@
         }
       });
 
-      modalBookLink.addEventListener('click', () => {
+      modalBookLink.addEventListener('click', (e) => {
         tastingModalClean.classList.remove('active');
         document.body.style.overflow = '';
+        const reserveSection = document.getElementById('reserve');
+        if (reserveSection) {
+          e.preventDefault();
+          reserveSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+
+      /* Smooth Scroll for Bottom Navigation Dock */
+      document.querySelectorAll('.mobile-bottom-dock a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetId = link.getAttribute('href').substring(1);
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
       });
 
       /* 7. Reservation System */
