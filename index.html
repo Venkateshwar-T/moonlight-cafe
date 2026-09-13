@@ -554,98 +554,103 @@
       line-height: 1.65;
     }
 
-    /* UNCONVENTIONAL ACTION DECK */
-    .hero-action-deck {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.85rem;
-      margin-top: 0.5rem;
-      max-width: 520px;
-    }
-
-    @media (min-width: 540px) {
-      .hero-action-deck {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .sanctuary-pass-card {
-      background: var(--grad-card-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 1.15rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 0.65rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      box-shadow: var(--shadow-card);
-      overflow: hidden;
-    }
-
-    .sanctuary-pass-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--cafe-caramel);
-      opacity: 0.7;
-      transition: width 0.3s ease, opacity 0.3s ease;
-    }
-
-    .sanctuary-pass-card:hover {
-      border-color: var(--cafe-caramel);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .sanctuary-pass-card:hover::before {
-      width: 6px;
-      opacity: 1;
-    }
-
-    .pass-header {
+    /* HERO ACTION CTA BUTTONS (Clean, Modern Buttons) */
+    .hero-cta-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
     }
 
-    .pass-tag {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--cafe-caramel);
-      font-weight: 600;
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, #E2A769 0%, #C98A47 100%);
+      color: #0E121B !important;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      padding: 0.85rem 1.75rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(226, 167, 105, 0.45);
+      box-shadow: 0 4px 18px rgba(226, 167, 105, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      text-decoration: none;
     }
 
-    .pass-arrow {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      transition: transform 0.25s ease, color 0.25s ease;
+    .btn-hero-primary svg {
+      width: 17px;
+      height: 17px;
+      transition: transform 0.2s ease;
     }
 
-    .sanctuary-pass-card:hover .pass-arrow {
+    .btn-hero-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(226, 167, 105, 0.55);
+      background: linear-gradient(135deg, #ECC088 0%, #D49553 100%);
+    }
+
+    .btn-hero-primary:hover svg {
       transform: translateX(4px);
+    }
+
+    .btn-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: rgba(22, 28, 42, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #F8F6F0 !important;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.65rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-hero-secondary svg {
+      width: 17px;
+      height: 17px;
       color: var(--cafe-caramel);
+      transition: transform 0.2s ease;
     }
 
-    .pass-headline {
-      font-family: var(--font-serif);
-      font-size: 1.2rem;
-      color: var(--text-primary);
-      line-height: 1.25;
-      font-weight: 500;
+    .btn-hero-secondary:hover {
+      transform: translateY(-2px);
+      background: rgba(226, 167, 105, 0.14);
+      border-color: var(--cafe-caramel);
+      color: var(--cafe-caramel) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     }
 
-    .pass-subtext {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.4;
+    .btn-hero-secondary:hover svg {
+      transform: scale(1.12);
+    }
+
+    @media (max-width: 480px) {
+      .hero-cta-row {
+        gap: 0.65rem;
+        width: 100%;
+      }
+
+      .btn-hero-primary,
+      .btn-hero-secondary {
+        flex: 1 1 0;
+        padding: 0.8rem 0.85rem;
+        font-size: 0.85rem;
+        gap: 0.4rem;
+        white-space: nowrap;
+      }
     }
 
     /* Hero Right: Arched Window Sanctuary Frame */
@@ -760,9 +765,14 @@
         align-items: center;
         justify-content: space-between;
       }
+
+      .filter-scroll-container {
+        overflow: visible !important;
+        padding: 0.5rem 0.25rem !important;
+      }
     }
 
-    /* Filter Pills: Smooth Touch Scroll, Zero Horizontal Bleed */
+    /* Filter Pills: Smooth Touch Scroll, Zero Cutoff Glow */
     .filter-scroll-container {
       width: 100%;
       max-width: 100%;
@@ -771,8 +781,9 @@
       scrollbar-width: none;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.25rem 0 0.4rem;
+      gap: 0.65rem;
+      padding: 0.65rem 0.85rem; /* Generous breathing room so side glow is never cut by scroll bounds */
+      scroll-padding: 0 0.85rem;
     }
 
     .filter-scroll-container::-webkit-scrollbar {
@@ -780,30 +791,38 @@
     }
 
     .filter-pill {
+      position: relative;
+      z-index: 1;
       white-space: nowrap;
       flex-shrink: 0;
-      padding: 0.48rem 1rem;
+      padding: 0.52rem 1.15rem;
       border-radius: var(--radius-full);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 500;
       color: var(--text-secondary);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
+      background: #161C2A;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
     }
 
     .filter-pill:hover {
       border-color: var(--cafe-caramel);
-      color: var(--cafe-caramel);
+      color: #FFFFFF;
+      transform: translateY(-1px);
     }
 
     .filter-pill.active {
+      position: relative;
+      z-index: 5; /* Crucial: elevates active pill ABOVE sibling buttons so adjacent backgrounds don't occlude side glow */
       background: var(--cafe-caramel);
-      color: #0E121B;
+      color: #0E121B !important;
       border-color: var(--cafe-caramel);
       font-weight: 700;
-      box-shadow: var(--shadow-caramel);
+      /* Full omnidirectional radial halo - smooth, vibrant, and never sliced on left or right */
+      box-shadow: 0 0 16px rgba(226, 167, 105, 0.6), 0 3px 12px rgba(226, 167, 105, 0.4);
+      transform: translateY(-1px);
     }
 
     /* Search Box */
@@ -1849,26 +1868,25 @@
             A tranquil day-to-night sanctuary in Gomti Nagar. Single-origin micro-lots, hand-poured V60 brews, freshly laminated French brioche, and warm analog vinyl under low amber lamps.
           </p>
 
-          <!-- UNCONVENTIONAL ACTION DECK -->
-          <div class="hero-action-deck">
-            <!-- Pass 1: Menu Flight -->
-            <a href="#menu" class="sanctuary-pass-card">
-              <div class="pass-header">
-                <span class="pass-tag">01 · Culinary Collection</span>
-                <span class="pass-arrow">→</span>
-              </div>
-              <h2 class="pass-headline">The Night Brews</h2>
-              <p class="pass-subtext">12 single-origin pours, ceremonial matcha cloud & warm French croissants.</p>
+          <!-- HERO ACTION CTA BUTTONS -->
+          <div class="hero-cta-row">
+            <a href="#reserve" class="btn-hero-primary" id="heroBookBtn">
+              <span>Book a Table</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
             </a>
 
-            <!-- Pass 2: Table Reservations -->
-            <a href="#reserve" class="sanctuary-pass-card">
-              <div class="pass-header">
-                <span class="pass-tag">02 · Table Reservations</span>
-                <span class="pass-arrow">↗</span>
-              </div>
-              <h2 class="pass-headline">Book a Table</h2>
-              <p class="pass-subtext">Choose your area: Vinyl Lounge, Glasshouse, or Quiet Library.</p>
+            <a href="#menu" class="btn-hero-secondary" id="heroMenuBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+              <span>Explore Menu</span>
             </a>
           </div>
         </div>
@@ -2788,6 +2806,18 @@
 
       /* Smooth Scroll for Bottom Navigation Dock */
       document.querySelectorAll('.mobile-bottom-dock a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetId = link.getAttribute('href').substring(1);
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      /* Smooth Scroll for Hero CTA Buttons */
+      document.querySelectorAll('.hero-cta-row a[href^="#"]').forEach(link => {
         link.addEventListener('click', (e) => {
           const targetId = link.getAttribute('href').substring(1);
           const targetEl = document.getElementById(targetId);
